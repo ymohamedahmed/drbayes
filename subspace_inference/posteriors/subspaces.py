@@ -11,8 +11,70 @@ import torch
 import numpy as np
 
 from sklearn.decomposition import TruncatedSVD
-from sklearn.decomposition.pca import _assess_dimension_
 from sklearn.utils.extmath import randomized_svd
+
+def _assess_dimension_(spectrum, rank, n_samples, n_features):
+    """Compute the likelihood of a rank ``rank`` dataset
+
+    The dataset is assumed to be embedded in gaussian noise of shape(n,
+    dimf) having spectrum ``spectrum``.
+
+    Parameters
+    ----------
+    spectrum: array of shape (n)
+        data spectrum
+    rank: int,
+        tested rank value
+    n_samples: int,
+        number of samples
+    dim: int,
+        embedding/empirical dimension
+
+    Returns
+    -------
+    ll: float,
+        The log-likelihood
+
+    Notes
+    -----
+    This implements the method of `Thomas P. Minka:
+    Automatic Choice of Dimensionality for PCA. NIPS 2000: 598-604`
+    """
+    if rank > len(spectrum):
+        raise ValueError("The tested rank cannot exceed the rank of the"
+                         " dataset")
+    from scipy.special import gammaln
+
+    pu = -rank * np.log(2)
+    for i in range(rank):
+        pu += (gammaln((n_features - i) / 2)
+               - np.log(np.pi) * (n_features - i) / 2)
+
+    pl = np.sum(np.log(spectrum[:rank]))
+    pl = -pl * n_samples / 2
+
+    if rank == n_features:
+        pv = 0
+        v = 1
+    else:
+        v = np.sum(spectrum[rank:]) / (n_features - rank)
+        pv = -np.log(v) * n_samples * (n_features - rank) / 2
+
+    m = n_features * rank - rank * (rank + 1) / 2
+    pp = np.log(2 * np.pi) * (m + rank + 1) / 2
+
+    pa = 0
+    spectrum_ = spectrum.copy()
+    spectrum_[rank:n_features] = v
+    for i in range(rank):
+        for j in range(i + 1, len(spectrum)):
+            pa += (np.log((spectrum[i] - spectrum[j])
+                          * (1. / spectrum_[j] - 1. / spectrum_[i]))
+                   + np.log(n_samples))
+
+    ll = pu + pl + pv + pp - pa / 2 - rank * np.log(n_samples) / 2
+
+    return ll
 
 
 class Subspace(torch.nn.Module, metaclass=abc.ABCMeta):

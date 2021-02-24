@@ -14,4 +14,5 @@ __all__ = [
     "losses",
     "models",
     "posteriors",
+    "curves"
 ]
