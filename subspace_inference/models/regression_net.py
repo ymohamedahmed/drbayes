@@ -2,6 +2,7 @@ import math
 import torch
 import torch.nn as nn
 import torchvision.transforms as transforms
+from .. import curves
 try:
     import os
     os.sys.path.append("/home/izmailovpavel/Documents/Projects/curves/")
@@ -17,7 +18,7 @@ __all__ = [
 
 class MDropout(torch.nn.Module):
     def __init__(self, dim, p, inplace=False):
-        super(MDropout, self).__init__()
+        super().__init__()
         self.dim = dim
         self.p = p
         self.inplace = inplace
@@ -39,7 +40,7 @@ def sample_masks(module):
 
 class SplitDim(nn.Module):
     def __init__(self, nonlin_col=1, nonlin_type=torch.nn.functional.softplus, correction = True):
-        super(SplitDim, self).__init__()
+        super().__init__()
         self.nonlinearity = nonlin_type
         self.col = nonlin_col
 
@@ -66,7 +67,7 @@ class SplitDim(nn.Module):
 
 class RegNetBase(nn.Sequential):
     def __init__(self, dimensions, input_dim=1, output_dim=1, dropout=None, apply_var=True):
-        super(RegNetBase, self).__init__()
+        super().__init__()
         self.dimensions = [input_dim, *dimensions, output_dim]        
         for i in range(len(self.dimensions) - 1):
             if dropout is not None and i > 0:
@@ -92,7 +93,8 @@ class RegNetBase(nn.Sequential):
 class RegNetCurve(nn.Sequential):
 
     def __init__(self, dimensions, fix_points, input_dim=1, output_dim=1, dropout=None):
-        super(RegNetCurve, self).__init__()
+#         super(RegNetCurve, self).__init__()
+        super().__init__()
         self.dimensions = [input_dim, *dimensions, output_dim]         
         for i in range(len(self.dimensions) - 1):
             if dropout is not None and i > 0:
