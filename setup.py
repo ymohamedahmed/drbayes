@@ -14,17 +14,17 @@ setup(
     install_requires=[
         'tqdm>=4.26.0',
         'numpy>=1.14.3',
-        'torchvision>=0.1.8',
+        'torchvision>=0.2.1',
         'gpytorch>=0.1.0rc4',
         'tabulate>=0.8.2',
         'scipy>=1.1.0',
         'setuptools>=39.1.0',
         'matplotlib>=2.2.2',
-        'torch>=1.7.1',
+        'torch>=1.0.0',
         'scikit_learn>=0.20.2',
         'pyro-ppl>=1.5.2',
         'pyparsing>=2.4.5',
-        'Pillow>=8.1.0'
+        'Pillow'
    ],
     include_package_data=True,
     classifiers=[
