@@ -14,7 +14,7 @@ setup(
     install_requires=[
         'tqdm>=4.26.0',
         'numpy>=1.14.3',
-        'torchvision>=0.2.1',
+        'torchvision>=0.1.8',
         'gpytorch>=0.1.0rc4',
         'tabulate>=0.8.2',
         'scipy>=1.1.0',
