@@ -20,7 +20,7 @@ setup(
         'scipy>=1.1.0',
         'setuptools>=39.1.0',
         'matplotlib>=2.2.2',
-        'torch>=1.8.0',
+        'torch>=1.7.1',
         'scikit_learn>=0.20.2',
         'pyro-ppl>=1.5.2',
         'pyparsing>=2.4.5',
