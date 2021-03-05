@@ -8,7 +8,7 @@ class SWAG(torch.nn.Module):
 
     def __init__(self, base, subspace_type,
                  subspace_kwargs=None, var_clamp=1e-6, *args, **kwargs):
-        super(SWAG, self).__init__()
+        super().__init__()
 
         self.base_model = base(*args, **kwargs)
         self.num_parameters = sum(param.numel() for param in self.base_model.parameters())
