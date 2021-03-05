@@ -22,7 +22,7 @@ setup(
         'matplotlib>=2.2.2',
         'torch>=1.0.0',
         'scikit_learn>=0.20.2',
-        'pyro-ppl>=1.5.2',
+        'pyro-ppl==1.5.2',
         'pyparsing>=2.4.5',
         'Pillow'
    ],
